@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
+const student = require('./models/student');
+const faculty = require('./models/faculty');
+const uniadmin = require('./models/uniadmin');
+const siteadmin = require('./models/siteadmin');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
