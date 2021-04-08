@@ -15,7 +15,7 @@ const uniAdminSchema = new mongoose.Schema(
             type: String,
             required: false
         }
-
+        
 
     }
 )
