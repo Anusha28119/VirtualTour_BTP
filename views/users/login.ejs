@@ -1,0 +1,57 @@
+<% layout ('/layouts/boilerplate')%>
+<div class="row mt-3">
+    <h2 style="font-weight: 800; color:black;">LOGIN</h2>
+    <div class="card col-5 offset-auto mt-4" style="background-color: darkorange; font-weight: 600; fill-opacity: 0.5;">
+    <form class="row g-3" action="/login" method="POST">
+        <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
+
+        <div class="mb-2 mt-3">
+        <label for="email">Enter email id </label>
+        <input class="form-control" type="text" name="email" id="email" required><br/>
+        </div>
+
+        <div class="mb-2">
+        <label for="password">Enter password</label>
+        <input class="form-control" type="password" name="password" id="password" required><br />
+        </div>
+
+        <div class="mb-2">
+        <label for="User">Enter User type</label>
+         <select class="form-control" name="User" id="User" required>
+            <option value="student" selected>Student</option>
+            <option value="faculty">Faculty</option>
+            <option value="uniadmin">University administration</option>
+            <option value="siteadmin">Web team</option>
+        </select><br />
+        </div>
+
+        <div class="mb-3 mt-2 col-md">
+        <input class="form-control btn btn-dark" type="submit" name="submit" value="Submit" />
+        </div>
+        </div>
+    </form>
+</div>
+<div class="card col-5 offset-2 mt-4" style="background-color:white">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://img.freepik.com/free-photo/businesswoman-with-glasses-crossed-arms_1098-3347.jpg?size=626&ext=jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://media.istockphoto.com/photos/young-indian-businesswoman-looking-at-camera-and-smiling-picture-id1131873200?k=6&m=1131873200&s=612x612&w=0&h=6betn44ls6d6dPCOSaulkC_CZI5U0q52hsE_Z4zOBqQ=" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/free-photo/smiling-female-business-leader-with-arms-crossed_1262-3089.jpg?size=626&ext=jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </a>
+    </div>
+</div>
+</div>
