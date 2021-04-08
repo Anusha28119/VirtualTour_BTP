@@ -14,6 +14,10 @@ app.listen(3000, () => {
     console.log("App is listening on port 3000!")
 })
 
+app.get('/login', (req,res) => {
+    res.render('users/login')
+})
+
 mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
 }).catch(err => {
