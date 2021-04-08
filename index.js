@@ -11,6 +11,8 @@ const { request } = require('http');
 const session = require('express-session');
 const ejsMate = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
+const uniAdmin = require('./models/uniadmin');
+const bcrypt = require('bcrypt');
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -62,12 +64,12 @@ app.post('/login', catchAsync(async(req,res) => {
          {
             res.send("Try again")
          }else{
-         const validPassword= await bcrypt.compare(password, user.password);
-         if(validPassword){
+         
+         if(password==user.password){
             user.session_id=user._id;
             req.session.user_id=user._id;
             await user.save()
-            console.log(user.session_id)
+
             console.log(req.session.user_id)
             //res.send(user);
             console.log(user);
@@ -140,8 +142,28 @@ mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).t
     console.log(err)
 });
 
+app.post('/universityadmin/edit', catchAsync(async (req, res) => {
+    const { name, email, password } = req.body;
+    console.log(req.body);
+
+    const user = await uniadmin.findOne({ email });
+    // const hash_pwd = await bcrypt.hash(req.body.password, 12);
+
+    // const newUniadmin = new uniAdmin({
+    //     name: req.body.name,
+    //     email: req.body.email,
+    //     password: req.body.password,
+    // })
+    // await newUniadmin.save()
+    user.password=req.body.password;
+    req.session.user_id = user._id;
+    console.log(user)
+    res.render('users/profile_uniadmin', { users: user })
+}))
+
+
 app.get('/universityadmin', (req, res) => {
-    res.render('users/uniadmin')
+    res.render('users/profile_uniadmin')
 })
 
 app.get('/universityadmin/edit', (req, res) => {
