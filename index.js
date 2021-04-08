@@ -32,3 +32,9 @@ mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).t
 app.get('/universityadmin', (req, res) => {
     res.render('users/uniadmin')
 })
+
+app.get('/universityadmin/edit', (req, res) => {
+    res.render('users/edit_profile')
+})
+
+
