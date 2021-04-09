@@ -34,29 +34,31 @@ app.post('/login', catchAsync(async(req,res) => {
     console.log(User);
     if(User == 'student'){
         const user = await student.findOne({email});
-         if(user==null)
-         {
-            res.send("Try again")
-         }else{
-         //const validPassword= await bcrypt.compare(password, user.password);
-         var validPassword;
-         if(user.password == password)
-            validPassword=1;
-        else
-        validPassword=0;
-         if(validPassword){
-            user.session_id=user._id;
-            req.session.user_id=user._id;
-            await user.save()
-            const users = await student.findOne({email});
-            res.render('users/profile_student', {users:users});
-            //res.redirect('/secret')
-        }
-       else{
-         res.redirect('/login')
-        }
-        }
+        if(user==null)
+        {
+           res.send("Try again")
+        }else{
         
+        if(password==user.password){
+           user.session_id=user._id;
+           req.session.user_id=user._id;
+           await user.save()
+
+           console.log(req.session.user_id)
+           //res.send(user);
+           console.log(user);
+           global.User_profile=user;
+           //console.log(users);
+           const users = await student.findOne({email});
+           //user.session_id=user._id;
+           //await user.save()
+           res.render('users/profile_student', {users:users});
+         }
+        else{
+          res.status(401).send('Incorrect username or password. Please try again!');  
+          res.redirect('/login')
+         }
+       }
     }
     else if(User == 'uniadmin'){
          const user = await uniadmin.findOne({email});
