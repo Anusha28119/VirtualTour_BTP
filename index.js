@@ -23,6 +23,7 @@ app.engine('ejs', ejsMate);
 
 app.listen(3000, () => {
     console.log("App is listening on port 3000!")
+})
 
 app.get('/login', (req,res) => {
     res.render('users/login')
@@ -104,30 +105,32 @@ app.post('/login', catchAsync(async(req,res) => {
         }
         }
     }else if(User == 'faculty'){
-         const user = await faculty.findOne({email});
-         if(user==null)
-         {
-            res.send("Try again")
-         }else{
-         const validPassword= await bcrypt.compare(password, user.password);
-         if(validPassword){
-            user.session_id=user._id;
-            req.session.user_id=user._id;
-            await user.save()
-            const users = await faculty.findOne({email});
-            var x = users.org_name;
-            console.log(x);
-            const userr = await faculty.find({org_name:x});
-            // userr.session_id=user._id;
-            // await userr.save()
-            // console.log(userr)
-            res.render('users/profile_faculty', {users:users,userrr:userr});
-            //res.redirect('/secret')
-        }
-       else{
-         res.redirect('/login')
-        }
+        const user = await faculty.findOne({email});
+        if(user==null)
+        {
+           res.send("Try again")
+        }else{
+        
+        if(password==user.password){
+           user.session_id=user._id;
+           req.session.user_id=user._id;
+           await user.save()
+
+           console.log(req.session.user_id)
+           //res.send(user);
+           console.log(user);
+           global.User_profile=user;
+           //console.log(users);
+           const users = await faculty.findOne({email});
+           //user.session_id=user._id;
+           //await user.save()
+           res.render('users/profile_faculty', {users:users});
          }
+        else{
+          res.status(401).send('Incorrect username or password. Please try again!');  
+          res.redirect('/login')
+         }
+       }
     }
 
 }))
@@ -140,6 +143,7 @@ mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).t
     console.log("Mongo connection error")
     console.log(err)
 });
+
 
 app.post('/universityadmin/edit', catchAsync(async (req, res) => {
     const { name, email, password } = req.body;
@@ -168,5 +172,3 @@ app.get('/universityadmin', (req, res) => {
 app.get('/universityadmin/edit', (req, res) => {
     res.render('users/edit_profile')
 })
-
-
