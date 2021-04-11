@@ -161,6 +161,9 @@ app.post('/universityadmin/edit', catchAsync(async (req, res) => {
     res.render('users/profile_uniadmin', { users: user })
 }))
 
+app.get('/home', (req, res) => {
+    res.render('users/tour')
+})
 
 app.get('/universityadmin', (req, res) => {
     res.render('users/profile_uniadmin')

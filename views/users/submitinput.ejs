@@ -1,0 +1,32 @@
+<div class="row">
+    <h3 style="font-weight: 800; color: black;" class="text-center">Edit Profile</h3>
+    <div class="card col-6 offset-3 mt-4"
+        style="background-color: rgb(237, 243, 238); font-weight: 600; fill-opacity: 0.8;">
+        <form class="row g-3" action="/universityadmin/edit" method="POST">
+            <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
+
+                <div class="mb-2 mt-3">
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" name="name" id="name" required
+                        value="<%= users.name %>"><br />
+                </div>
+
+                <div class="mb-2">
+                    <label for="email">Email address (abc@example.com)</label>
+                    <input class="form-control" type="email" name="email" id="email" required
+                        value="<%= users.email %>"><br />
+                </div>
+
+                <div class="mb-2">
+                    <label for="password">Description</label>
+                    <input class="form-control" type="textarea" name="password" id="password" required
+                        value="<%= users.password %>"><br />
+                </div>
+
+                <div class="mb-3 mt-2">
+                    <input class="btn btn-dark form-control" type="submit" name="submit" value="Submit" />
+                </div>
+            </div>
+        </form>
+
+    </div>
