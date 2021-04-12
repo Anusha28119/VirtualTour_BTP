@@ -6,6 +6,7 @@ const student = require('./models/student');
 const faculty = require('./models/faculty');
 const uniadmin = require('./models/uniadmin');
 const siteadmin = require('./models/siteadmin');
+const message = require('./models/message');
 const { urlencoded } = require('express');
 const { request } = require('http');
 const session = require('express-session');
@@ -101,23 +102,32 @@ app.post('/login', catchAsync(async(req,res) => {
           }
         }
     }else if( User == 'siteadmin'){
-         const user = await siteadmin.findOne({email});
-         if(user==null)
-         {
+        const user = await siteadmin.findOne({ email });
+        if (user == null) {
             res.send("Try again")
-         }else{
-         const validPassword= await bcrypt.compare(password, user.password);
-         if(validPassword){
-            user.session_id=user._id;
-            req.session.user_id=user._id;
-            await user.save()
-            const users = await siteadmin.findOne({email});
-            res.render('users/profile_siteadmin', {users:users});
-            //res.redirect('/secret')
-        }
-       else{
-         res.redirect('/login')
-        }
+        } else {
+            console.log(user);
+
+            if (password == user.password) {
+                user.session_id = user._id;
+                req.session.user_id = user._id;
+                await user.save()
+
+                console.log(req.session.user_id)
+                //res.send(user);
+                console.log(user);
+                global.User_profile = user;
+                //console.log(users);
+                const users = await siteadmin.findOne({ email });
+                //user.session_id=user._id;
+                //await user.save()
+                req.session.user_id = user._id;
+                res.render('users/profile_webadmin', { users: users });
+            }
+            else {
+                res.status(401).send('Incorrect username or password. Please try again!');
+                res.redirect('/login')
+            }
         }
     }else if(User == 'faculty'){
         const user = await faculty.findOne({email});
@@ -168,9 +178,19 @@ app.post('/universityadmin/submitInput/success', requireLogin, catchAsync(async 
     const user = await uniadmin.findOne({session_id:x});
     console.log(req.body.password);
     //enter into a model
-    console.log(user);
-    await user.save()
-    res.render('users/edit_success')
+    const newMessage = new message({
+        name: user.name,
+        email: user.email,
+        category: req.body.category,
+        type: 'text',
+        submission: req.body.submission,
+        approved: 0,
+        added: 0
+    })
+    await newMessage.save()
+    console.log(newMessage)
+
+    res.render('users/submit_input_success')
 
 }))
 
@@ -210,9 +230,28 @@ app.post('/universityadmin/edit', requireLogin, catchAsync(async (req, res) => {
     res.render('users/edit_profile', { users: user })
 }))
 
+app.get('/siteadmin/view/input', requireLogin, catchAsync(async (req, res) => {
+    const dbo = message.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/view_input', { users })
+}))
+
 app.get('/home', (req, res) => {
     res.render('users/tour')
 })
+
+app.post('/universityadmin/submitInput/approve', requireLogin, catchAsync(async (req, res) => {
+
+    var x = req.session.user_id;
+    console.log(req.body)
+    const user = await siteadmin.findOne({ session_id: x });
+    const user_msg =  await message.findOne({email:req.body.email, submission: req.body.submission})
+    console.log(user_msg)
+    res.render('users/view_input', { users: user })
+
+}))
+
 app.post('/universityadmin/submitInput', requireLogin, catchAsync(async (req, res) => {
     
     var x=req.session.user_id;
@@ -222,6 +261,10 @@ app.post('/universityadmin/submitInput', requireLogin, catchAsync(async (req, re
 
 }))
 
+app.post('/logout', (req, res) => {
+    req.session.user_id = null;
+    res.redirect('/login');
+})
 
 
 app.get('/universityadmin', (req, res) => {
