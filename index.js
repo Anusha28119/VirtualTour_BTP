@@ -25,6 +25,17 @@ app.listen(3000, () => {
     console.log("App is listening on port 3000!")
 })
 
+const requireLogin =(req,res, next) =>{
+    if(!req.session.user_id)
+    {
+        return res.redirect('/login')
+    }
+    
+    next();
+
+}
+
+
 app.get('/login', (req,res) => {
     res.render('users/login')
 })
@@ -66,6 +77,7 @@ app.post('/login', catchAsync(async(req,res) => {
          {
             res.send("Try again")
          }else{
+             console.log(user);
          
          if(password==user.password){
             user.session_id=user._id;
@@ -80,6 +92,7 @@ app.post('/login', catchAsync(async(req,res) => {
             const users = await uniadmin.findOne({email});
             //user.session_id=user._id;
             //await user.save()
+            req.session.user_id=user._id;
             res.render('users/profile_uniadmin', {users:users});
           }
          else{
@@ -146,12 +159,43 @@ mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).t
     console.log(err)
 });
 
+app.get('/universityadmin', (req, res) => {
+    res.render('users/profile_uniadmin')
+})
 
-app.post('/universityadmin/edit', catchAsync(async (req, res) => {
-    const { name, email, password } = req.body;
-    console.log(req.body);
+app.post('/universityadmin/submitInput/success', requireLogin, catchAsync(async (req,res)=>{
+    var x=req.session.user_id;
+    const user = await uniadmin.findOne({session_id:x});
+    console.log(req.body.password);
+    //enter into a model
+    console.log(user);
+    await user.save()
+    res.render('users/edit_success')
 
-    const user = await uniadmin.findOne({ email });
+}))
+
+app.post('/universityadmin/edit/success', requireLogin, catchAsync(async (req,res)=>{
+    var x=req.session.user_id;
+    const user = await uniadmin.findOne({session_id:x});
+    console.log(req.body.password);
+    user.password=req.body.password;
+    console.log(user);
+    await user.save()
+    res.render('users/edit_success')
+
+}))
+
+app.post('/universityadmin/edit', requireLogin, catchAsync(async (req, res) => {
+    //const { name, email, password } = req.body;
+    //console.log(req.body);
+    var x=req.session.user_id;
+    //console.log("Session Id")
+    //console.log(x)
+    const user = await uniadmin.findOne({session_id:x});
+    //console.log("email")
+    //console.log(req.body.email);
+
+    //const user = await uniadmin.findOne({ email });
     // const hash_pwd = await bcrypt.hash(req.body.password, 12);
 
     // const newUniadmin = new uniAdmin({
@@ -160,15 +204,25 @@ app.post('/universityadmin/edit', catchAsync(async (req, res) => {
     //     password: req.body.password,
     // })
     // await newUniadmin.save()
-    user.password=req.body.password;
-    req.session.user_id = user._id;
+    //user.password=req.body.password;
+    //req.session.user_id = user._id;
     console.log(user)
-    res.render('users/profile_uniadmin', { users: user })
+    res.render('users/edit_profile', { users: user })
 }))
 
 app.get('/home', (req, res) => {
     res.render('users/tour')
 })
+app.post('/universityadmin/submitInput', requireLogin, catchAsync(async (req, res) => {
+    
+    var x=req.session.user_id;
+    const user = await uniadmin.findOne({session_id:x});
+    console.log(user)
+    res.render('users/submit_input', { users: user })
+
+}))
+
+
 
 app.get('/universityadmin', (req, res) => {
     res.render('users/profile_uniadmin')
