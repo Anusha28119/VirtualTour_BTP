@@ -1,0 +1,42 @@
+<% layout ('/layouts/boilerplate_siteadmin')%>
+    <h1>VIEW INPUTS</h1>
+    <table class="table table-borderless">
+        <tr class="table-dark">
+            <th>Name</th>
+            <th>Email Address</th>
+            <th>Category</th>
+            <th>Input</th>
+            <th>Approved</th>
+            <th>Added</th>
+    
+    
+        </tr>
+        <% for (let user of users) {%>
+    
+            <tr class="table-light">
+                <td>
+                    <%= user.name %>
+                </td>
+                <td><a href="mailto:<%= user.email %>">
+                        <%= user.email %>
+                    </a></td>
+                <td>
+                    <%= user.category %>
+                </td>
+                <td>
+                    <%= user.submission %>
+                </td>
+                <td>
+                    <%= user.approved %>
+                    <form class="form mt-auto" action="/universityadmin/submitInput/approve" method="POST">
+                        <button class="btn btn-dark">Approve</button>
+                    </form>
+                </td>
+                <td>
+                    <%= user.added %>
+                </td>
+                
+    
+            </tr>
+            <% }%>
+    </table>
