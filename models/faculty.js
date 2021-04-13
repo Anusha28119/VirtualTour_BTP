@@ -14,7 +14,11 @@ const facultySchema = new mongoose.Schema(
         password: {
             type: String,
             required: false
+        },
+        session_id:{
+            type:String
         }
+
 
 
     }

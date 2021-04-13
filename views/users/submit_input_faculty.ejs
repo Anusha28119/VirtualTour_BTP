@@ -1,0 +1,54 @@
+<% layout ('/layouts/boilerplate_faculty')%>
+    <div class="row">
+        <h3 style="font-weight: 800; color: black;" class="text-center">Submit Input</h3>
+        <div class="card col-6 offset-3 mt-4" style="background-color: rgb(241, 241, 240); font-weight: 600; fill-opacity: 0.5;">
+            <form class="row g-3" action="/faculty/submitInput/success" method="POST">
+                <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
+        
+                    <div class="mb-2 mt-3">
+                        <label for="name">Sender's name</label>
+                        <input class="form-control" type="text" name="name" id="name" required disabled value="<%= users.name %> "><br />
+                    </div>
+        
+                    <div class="mb-2">
+                        <label for="email">Sender's email address</label>
+                        <input class="form-control" type="email" name="email" id="email" required disabled value="<%= users.email %> "><br />
+                    </div>
+        
+                    <div class="mb-2">
+                        <label for="category">Enter a category for your input</label><br />
+                        <select class="form-control" name="category" id="category" required>
+                            <option selected>Select category</option>
+                            <option value="location">Location of an office/building/lab</option>
+                            <option value="timings">Timings of operation </option>
+                            <option value="hostel">Hostel Information</option>
+                            <option value="poc">Persons-in-charge</option>
+                            <option value="other">Others</option>
+                        </select><br />
+                    </div>
+        
+                    <div class="mb-2">
+                        <label for="submission">Submit your input here : </label><br />
+                        <textarea class="form-control" rows="5" cols="50" name="submission" id="submission" required>
+                            </textarea><br />
+                    </div>
+        
+                    <div class="form-group mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                            <label style="font-size: small;" class="form-check-label" for="invalidCheck">
+                                I agree that my input follows all norms and guidelines stipulated by the university, otherwise I am liable to be blocked from this portal for all purposes.
+                            </label>
+                            <div class="invalid-feedback">
+                                You must agree before submitting.
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="mb-3 mt-2">
+                        <input class="form-control btn btn-dark" type="submit" name="submit" value="Submit" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
