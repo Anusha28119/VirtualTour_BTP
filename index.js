@@ -241,6 +241,14 @@ app.get('/home', (req, res) => {
     res.render('users/tour')
 })
 
+app.get('/about_us', async (req, res) => {
+    res.render('users/about_us')
+})
+
+app.get('/contact_us', async (req, res) => {
+    res.render('users/contact_us')
+})
+
 app.post('/universityadmin/submitInput/approve', requireLogin, catchAsync(async (req, res) => {
 
     var x = req.session.user_id;

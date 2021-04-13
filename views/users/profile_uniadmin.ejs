@@ -1,4 +1,4 @@
-<% layout ('/layouts/boilerplate_user')%>
+<% layout ('/layouts/boilerplate')%>
     <h1>MY PROFILE</h1>
     <div class="row">
         <h3 style="font-weight: 800; color: black;" class="text-center">Edit Profile</h3>
@@ -21,7 +21,7 @@
     
                     <div class="mb-2">
                         <label for="password">Password</label>
-                        <input class="form-control" type="text" name="password" id="password" required
+                        <input class="form-control" type="password" name="password" id="password" required
                             value="<%= users.password %>">
                             <input type="checkbox" onclick="myFunction()">Show Password<br />
                     </div>
