@@ -3,7 +3,7 @@
         <h3 style="font-weight: 800; color: black;" class="text-center">Change Password</h3>
         <div class="card col-6 offset-3 mt-4"
             style="background-color: rgb(14, 124, 28); font-weight: 600; fill-opacity: 0.8;">
-            <form class="row g-3" action="/investors" method="POST">
+            <form class="row g-3" action="/universityadmin/edit/success" method="POST">
                 <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
 
                     <div class="mb-2 mt-3">
@@ -18,7 +18,7 @@
 
                     <div class="mb-2">
                         <label for="password">Password</label>
-                        <input class="form-control" type="password" name="password" id="password" required value="<%= users.password %>"><br />
+                        <input class="form-control" type="password" name="password" id="password" value="<%= users.password %>"><br />
                     </div>
 
                     <div class="mb-3 mt-2">
