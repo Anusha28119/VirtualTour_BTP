@@ -59,10 +59,11 @@ app.post('/login', catchAsync(async(req,res) => {
            //res.send(user);
            console.log(user);
            global.User_profile=user;
-           //console.log(users);
+           
            const users = await student.findOne({email});
            //user.session_id=user._id;
            //await user.save()
+           console.log(users);
            res.render('users/profile_student', {users:users});
          }
         else{
@@ -185,29 +186,68 @@ app.post('/universityadmin/edit/success', requireLogin, catchAsync(async (req,re
 
 }))
 
-app.post('/universityadmin/edit', requireLogin, catchAsync(async (req, res) => {
-    //const { name, email, password } = req.body;
-    //console.log(req.body);
+app.post('/student/edit/success', requireLogin, catchAsync(async (req,res)=>{
     var x=req.session.user_id;
-    //console.log("Session Id")
-    //console.log(x)
+    const user = await student.findOne({session_id:x});
+    console.log(req.body.password);
+    user.password=req.body.password;
+    console.log(user);
+    await user.save()
+    res.render('users/edit_success_student')
+
+}))
+
+app.post('/faculty/edit/success', requireLogin, catchAsync(async (req,res)=>{
+    var x=req.session.user_id;
+    const user = await faculty.findOne({session_id:x});
+    console.log(req.body.password);
+    user.password=req.body.password;
+    console.log(user);
+    await user.save()
+    res.render('users/edit_success_faculty')
+
+}))
+
+app.post('/universityadmin/edit', requireLogin, catchAsync(async (req, res) => {
+    
+    var x=req.session.user_id;
     const user = await uniadmin.findOne({session_id:x});
-    //console.log("email")
-    //console.log(req.body.email);
-
-    //const user = await uniadmin.findOne({ email });
-    // const hash_pwd = await bcrypt.hash(req.body.password, 12);
-
-    // const newUniadmin = new uniAdmin({
-    //     name: req.body.name,
-    //     email: req.body.email,
-    //     password: req.body.password,
-    // })
-    // await newUniadmin.save()
-    //user.password=req.body.password;
-    //req.session.user_id = user._id;
     console.log(user)
     res.render('users/edit_profile', { users: user })
+}))
+
+app.post('/student/edit', requireLogin, catchAsync(async (req, res) => {
+    var x=req.session.user_id;
+    const user = await student.findOne({session_id:x});
+    console.log(user)
+    res.render('users/edit_profile_student', { users: user })
+}))
+
+app.post('/faculty/edit', requireLogin, catchAsync(async (req, res) => {
+    var x=req.session.user_id;
+    const user = await faculty.findOne({session_id:x});
+    console.log(user)
+    res.render('users/edit_profile_faculty', { users: user })
+}))
+
+app.post('/faculty/submitInput', requireLogin, catchAsync(async (req, res) => {
+    
+    var x=req.session.user_id;
+    const user = await faculty.findOne({session_id:x});
+    console.log(user)
+    res.render('users/submit_input_faculty', { users: user })
+
+}))
+
+
+
+app.post('/student/submitInput', requireLogin, catchAsync(async (req, res) => {
+    
+    var x=req.session.user_id;
+    const user = await student.findOne({session_id:x});
+    console.log(user)
+    res.render('users/submit_input_student', { users: user })
+
 }))
 
 app.post('/universityadmin/submitInput', requireLogin, catchAsync(async (req, res) => {
@@ -223,6 +263,10 @@ app.post('/universityadmin/submitInput', requireLogin, catchAsync(async (req, re
 
 app.get('/universityadmin', (req, res) => {
     res.render('users/profile_uniadmin')
+})
+
+app.get('/student', (req, res) => {
+    res.render('users/profile_student')
 })
 
 app.get('/universityadmin/edit', (req, res) => {
