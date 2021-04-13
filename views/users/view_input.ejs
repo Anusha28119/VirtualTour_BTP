@@ -12,6 +12,9 @@
     
         </tr>
         <% for (let user of users) {%>
+            <%if (user.added== 0) { %>
+                
+                
     
             <tr class="table-light">
                 <td>
@@ -27,16 +30,48 @@
                     <%= user.submission %>
                 </td>
                 <td>
-                    <%= user.approved %>
+                    
                     <form class="form mt-auto" action="/universityadmin/submitInput/approve" method="POST">
-                        <button class="btn btn-dark">Approve</button>
+
+                        <em><label for="email">User email address</label></em>
+                        <input class="form-control" type="text" name="email" id="email" required value="<%= user.email %>">
+                        <em><label for="submission">User submission</label></em>
+                        <input class="form-control" type="text" name="submission" id="submission" required value="<%= user.submission %>">
+                        <em><label for="approved">Approved?</label></em>
+                        <%if (user.approved> 0) { %>
+                            <input class="form-control" type="text" name="approved" id="approved" required value="Yes">
+                            <button class="btn btn-dark">Disapprove</button>
+                        <% } else{ %>  
+                            <input class="form-control" type="text" name="approved" id="approved" required value="No">
+                            <button class="btn btn-dark">Approve</button>
+                        <% } %>
+                        
+                        
                     </form>
                 </td>
                 <td>
-                    <%= user.added %>
+                    <form class="form mt-auto" action="/universityadmin/submitInput/add" method="POST">
+                    
+                        <em><label for="email">User email address</label></em>
+                        <input class="form-control" type="text" name="email" id="email" required value="<%= user.email %>">
+                        <em><label for="submission">User submission</label></em>
+                        <input class="form-control" type="text" name="submission" id="submission" required value="<%= user.submission %>">
+                        <em><label for="approved">Approved?</label></em>
+                        <%if (user.approved> 0) { %>
+                            <input class="form-control" type="text" name="approved" id="approved" required value="Yes">
+                            <button class="btn btn-danger">Add</button>
+                            <% } else{ %>
+                                <input class="form-control" type="text" name="approved" id="approved" required value="No">
+                                <button class="btn btn-danger" disabled>Add</button>
+                         <% } %>
+                            
+                    
+                    
+                    </form>
                 </td>
                 
     
             </tr>
+            <% } %>
             <% }%>
     </table>

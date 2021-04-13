@@ -247,8 +247,25 @@ app.post('/universityadmin/submitInput/approve', requireLogin, catchAsync(async 
     console.log(req.body)
     const user = await siteadmin.findOne({ session_id: x });
     const user_msg =  await message.findOne({email:req.body.email, submission: req.body.submission})
-    console.log(user_msg)
-    res.render('users/view_input', { users: user })
+    console.log('This is the user message ka approval status')
+    console.log(user_msg.approved)
+    user_msg.approved=!user_msg.approved
+    console.log('This is the user message ka naya approval status')
+    console.log(user_msg.approved)
+    await user_msg.save()
+    res.render('users/approve_add_success')
+
+}))
+
+app.post('/universityadmin/submitInput/add', requireLogin, catchAsync(async (req, res) => {
+
+    var x = req.session.user_id;
+    console.log(req.body)
+    const user = await siteadmin.findOne({ session_id: x });
+    const user_msg = await message.findOne({ email: req.body.email, submission: req.body.submission })
+    user_msg.added=1
+    await user_msg.save()
+    res.render('users/approve_add_success')
 
 }))
 
