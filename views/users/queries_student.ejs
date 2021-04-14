@@ -1,0 +1,18 @@
+<% layout ('/layouts/boilerplate_student')%>
+        <h1>FAQs</h1>
+        <table class="table">
+            <tr class="table-dark">
+                <th>Heading</th>
+                
+                
+            </tr>
+            <% for (let user of users) {%>
+                
+                <tr class="table-light">
+                    <td><a href="/student/queries?category=<%= user.heading %>"><%= user.heading %></a></td>
+
+                </tr>
+                <% }%>
+        </table>
+
+        
