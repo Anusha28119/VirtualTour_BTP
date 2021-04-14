@@ -7,6 +7,7 @@ const faculty = require('./models/faculty');
 const uniadmin = require('./models/uniadmin');
 const siteadmin = require('./models/siteadmin');
 const message = require('./models/message');
+const queries = require('./models/queries');
 const { urlencoded } = require('express');
 const { request } = require('http');
 const session = require('express-session');
@@ -173,6 +174,74 @@ mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).t
 app.get('/universityadmin', (req, res) => {
     res.render('users/profile_uniadmin')
 })
+
+app.post('/universityadmin/searchQueries', requireLogin, catchAsync(async (req,res)=>{
+    
+    const dbo = queries.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/queries_uniadmin', { users })
+
+}))
+
+app.post('/student/searchQueries', requireLogin, catchAsync(async (req,res)=>{
+    
+    const dbo = queries.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/queries_student', { users })
+
+}))
+
+app.post('/faculty/searchQueries', requireLogin, catchAsync(async (req,res)=>{
+    
+    const dbo = queries.find({})
+    const users = await dbo
+    console.log(users)
+    res.render('users/queries_faculty', { users })
+
+}))
+
+app.get('/uniadmin/queries', requireLogin, catchAsync(async (req, res) => {
+    const { category } = req.query
+    console.log(category)
+        const users = await queries.findOne({ heading:category });
+        res.render('users/query_details_uniadmin', { user:users})
+
+    // else {
+    //     const users = await entrepreneur.find({})
+    //     res.render('users/index', { users, category: 'All' })
+
+    // }
+}))
+
+app.get('/faculty/queries', requireLogin, catchAsync(async (req, res) => {
+    const { category } = req.query
+    console.log(category)
+        const users = await queries.findOne({ heading:category });
+        res.render('users/query_details_faculty', { user:users})
+
+}))
+
+app.get('/student/queries', requireLogin, catchAsync(async (req, res) => {
+    const { category } = req.query
+    console.log(category)
+        const users = await queries.findOne({ heading:category });
+        res.render('users/query_details_student', { user:users})
+
+}))
+
+
+app.post('/universityadmin/filterQueries', requireLogin, catchAsync(async (req,res)=>{
+    var x=req.session.user_id;
+    const user = await uniadmin.findOne({session_id:x});
+    console.log(req.body.password);
+    user.password=req.body.password;
+    console.log(user);
+    await user.save()
+    res.render('users/edit_success')
+
+}))
 
 app.post('/universityadmin/submitInput/success', requireLogin, catchAsync(async (req,res)=>{
     var x=req.session.user_id;
