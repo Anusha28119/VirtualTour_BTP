@@ -183,7 +183,8 @@ app.post('/universityadmin/submitInput/success', requireLogin, catchAsync(async 
         name: user.name,
         email: user.email,
         category: req.body.category,
-        type: 'text',
+        type: req.body.type,
+        file: req.body.file,
         submission: req.body.submission,
         approved: 0,
         added: 0
@@ -344,6 +345,17 @@ app.post('/universityadmin/submitInput/approve', requireLogin, catchAsync(async 
     console.log(user_msg.approved)
     await user_msg.save()
     res.render('users/approve_add_success')
+
+}))
+
+app.post('/submitInput/delete', requireLogin, catchAsync(async (req, res) => {
+
+    var x = req.session.user_id;
+    console.log(req.body)
+    const user = await siteadmin.findOne({ session_id: x });
+    const user_msg = await message.findOne({ email: req.body.email, submission: req.body.submission })
+    await user_msg.delete()
+    res.render('users/delete_success')
 
 }))
 

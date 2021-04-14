@@ -1,3 +1,4 @@
+const { Binary } = require('bson');
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema(
@@ -18,6 +19,10 @@ const messageSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        // file: {
+        //     type: BigInt64Array,
+        //     required: false
+        // },
         submission: {
             type: String,
             required: false

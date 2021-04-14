@@ -35,6 +35,8 @@
 
                         <em><label for="email">User email address</label></em>
                         <input class="form-control" type="text" name="email" id="email" required value="<%= user.email %>">
+                        <!-- <em><label for="file">File upload</label></em>
+                        <input class="form-control-file" type="text" name="file" id="file" required value="<%= user.file %>"> -->
                         <em><label for="submission">User submission</label></em>
                         <input class="form-control" type="text" name="submission" id="submission" required value="<%= user.submission %>">
                         <em><label for="approved">Approved?</label></em>
@@ -54,6 +56,8 @@
                     
                         <em><label for="email">User email address</label></em>
                         <input class="form-control" type="text" name="email" id="email" required value="<%= user.email %>">
+                        <!-- <em><label for="file">File upload</label></em>
+                        <input class="form-control-file" type="text" name="file" id="file" required value="<%= user.file %>"> -->
                         <em><label for="submission">User submission</label></em>
                         <input class="form-control" type="text" name="submission" id="submission" required value="<%= user.submission %>">
                         <em><label for="approved">Approved?</label></em>
@@ -62,9 +66,9 @@
                             <button class="btn btn-danger">Add</button>
                             <% } else{ %>
                                 <input class="form-control" type="text" name="approved" id="approved" required value="No">
-                                <button class="btn btn-danger" disabled>Add</button>
+                                <button class="btn btn-success" disabled>Add</button>
                          <% } %>
-                            
+                         <button class="btn btn-danger" onclick="javascript: form.action='/submitInput/delete'; form.method='POST';">Delete</button>
                     
                     
                     </form>
