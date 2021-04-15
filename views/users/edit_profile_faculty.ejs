@@ -2,7 +2,7 @@
     <div class="row">
         <h3 style="font-weight: 800; color: black;" class="text-center">Change Password</h3>
         <div class="card col-6 offset-3 mt-4"
-            style="background-color: rgb(14, 124, 28); font-weight: 600; fill-opacity: 0.8;">
+            style="background-color: rgb(249, 252, 250); font-weight: 600; fill-opacity: 0.8;">
             <form class="row g-3" action="/faculty/edit/success" method="POST">
                 <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
 
@@ -18,7 +18,15 @@
 
                     <div class="mb-2">
                         <label for="password">Password</label>
-                        <input class="form-control" type="password" name="password" id="password" value="<%= users.password %>"><br />
+                        <input class="form-control" type="password" name="password" id="password" aria-describedby="passwordHelpBlock"
+                            value="<%= users.password %>"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"><br />
+                        <input type="checkbox" onclick="myFunction()">Show Password<br />
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            Your password must be of minimum eight and maximum 10 characters, at least one uppercase letter, one lowercase
+                            letter, one number and one special
+                            character:
+                        </small>
                     </div>
 
                     <div class="mb-3 mt-2">

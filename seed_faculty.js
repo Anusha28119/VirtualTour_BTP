@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uniadmin = require('./models/faculty');
+const faculty = require('./models/faculty');
 
 mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
@@ -11,14 +11,18 @@ mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).t
 
 const faculties = [
     {
-        name: "Sumedha",
-        email: "sumedha@gmail.com",
+        name: "Meisha",
+        email: "meisha@gmail.com",
         password: "facultypass",
     },
-    
+    {
+        name: "Anusha",
+        email: "anusha@gmail.com",
+        password: "password",
+    }
 ]
 
-uniadmin.insertMany(faculties).then(res => {
+faculty.insertMany(faculties).then(res => {
     console.log(res)
     console.log("Faculty data insertion successful")
 }).catch(e => {

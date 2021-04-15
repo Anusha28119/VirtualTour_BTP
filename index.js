@@ -44,9 +44,14 @@ app.get('/login', (req,res) => {
 
 app.post('/login', catchAsync(async(req,res) => {
     const{email, password, User} = req.body;
+    console.log('Ye request ki body hai')
+    console.log(req.body)
     console.log(User);
     if(User == 'student'){
+        console.log('Inside student conditional')
         const user = await student.findOne({email});
+        console.log('Ye user mila')
+        console.log(user)
         if(user==null)
         {
            res.send("Try again")
@@ -76,6 +81,8 @@ app.post('/login', catchAsync(async(req,res) => {
     }
     else if(User == 'uniadmin'){
          const user = await uniadmin.findOne({email});
+        console.log('Ye user mila')
+        console.log(user)
          if(user==null)
          {
             res.send("Try again")
@@ -137,6 +144,7 @@ app.post('/login', catchAsync(async(req,res) => {
         {
            res.send("Try again")
         }else{
+            console.log(user)
         
         if(password==user.password){
            user.session_id=user._id;
@@ -151,6 +159,7 @@ app.post('/login', catchAsync(async(req,res) => {
            const users = await faculty.findOne({email});
            //user.session_id=user._id;
            //await user.save()
+           req.session.user_id = user._id;
            res.render('users/profile_faculty', {users:users});
          }
         else{
@@ -389,6 +398,17 @@ app.get('/siteadmin/view/input', requireLogin, catchAsync(async (req, res) => {
     res.render('users/view_input', { users })
 }))
 
+app.post('/home_student', async (req,res) =>{
+    res.render('users/tour_student')
+})
+
+app.post('/home_uniadmin', async (req, res) => {
+    res.render('users/tour_uniadmin')
+})
+
+app.post('/home_faculty', async (req, res) => {
+    res.render('users/tour_faculty')
+})
 app.get('/home', (req, res) => {
     res.render('users/tour')
 })
@@ -436,6 +456,12 @@ app.post('/universityadmin/submitInput/add', requireLogin, catchAsync(async (req
     const user_msg = await message.findOne({ email: req.body.email, submission: req.body.submission })
     user_msg.added=1
     await user_msg.save()
+    const newQuery = new queries({
+        heading: req.body.category,
+        details: req.body.submission,
+        session_id: req.session.user_id
+    })
+    await newQuery.save()
     res.render('users/approve_add_success')
 
 }))

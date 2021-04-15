@@ -37,6 +37,8 @@
                         <input class="form-control" type="text" name="email" id="email" required value="<%= user.email %>">
                         <!-- <em><label for="file">File upload</label></em>
                         <input class="form-control-file" type="text" name="file" id="file" required value="<%= user.file %>"> -->
+                        <em><label for="category">Input Category</label></em>
+                        <input class="form-control" type="text" name="category" id="category" required value="<%= user.category %>">
                         <em><label for="submission">User submission</label></em>
                         <input class="form-control" type="text" name="submission" id="submission" required value="<%= user.submission %>">
                         <em><label for="approved">Approved?</label></em>
@@ -58,12 +60,14 @@
                         <input class="form-control" type="text" name="email" id="email" required value="<%= user.email %>">
                         <!-- <em><label for="file">File upload</label></em>
                         <input class="form-control-file" type="text" name="file" id="file" required value="<%= user.file %>"> -->
+                        <em><label for="category">Input Category</label></em>
+                        <input class="form-control" type="text" name="category" id="category" required value="<%= user.category %>">
                         <em><label for="submission">User submission</label></em>
                         <input class="form-control" type="text" name="submission" id="submission" required value="<%= user.submission %>">
                         <em><label for="approved">Approved?</label></em>
                         <%if (user.approved> 0) { %>
                             <input class="form-control" type="text" name="approved" id="approved" required value="Yes">
-                            <button class="btn btn-danger">Add</button>
+                            <button class="btn btn-success">Add</button>
                             <% } else{ %>
                                 <input class="form-control" type="text" name="approved" id="approved" required value="No">
                                 <button class="btn btn-success" disabled>Add</button>

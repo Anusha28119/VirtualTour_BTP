@@ -12,8 +12,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <form class="form mt-auto" action="/home_faculty" method="POST">
+                    <form class="form mt-auto" action="/home" method="GET">
                         <button class="btn btn-dark">Take Tour</button>
+                    </form>
+                </li>
+
+                <li class="nav-item">
+                    <form class="form mt-auto" action="/login" method="POST">
+                        <button class="btn btn-dark">My Profile</button>
                     </form>
                 </li>
 
@@ -24,14 +30,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <form class="form mt-auto" action="/faculty/edit" method="POST">
-                        <button class="btn btn-dark">Change Password</button>
-                    </form>
-                </li>
-
-                <li class="nav-item">
                     <form class="form mt-auto" action="/faculty/searchQueries" method="POST">
-                            <button class="btn btn-dark">Search Queries</button>
+                        <button class="btn btn-dark">Search Queries</button>
                     </form>
                 </li>
                 <!-- <li class="nav-item"><a class="nav-link" href="/universityadmin/edit"><button class="btn btn-dark">Change Password
@@ -41,11 +41,11 @@
                         </button></a></li> -->
                 <!-- <li class="nav-item"><a class="nav-link" href="#whyVriddhi"><button class="btn btn-dark">Search your query</button>
                     </a></li> -->
-                    <li class="nav-item">
-                        <form class="form mt-auto" action="/logout" method="POST">
-                            <button class="btn btn-dark">Log Out</button>
-                        </form>
-                    </li>
+                <li class="nav-item">
+                    <form class="form mt-auto" action="/logout" method="POST">
+                        <button class="btn btn-dark">Log Out</button>
+                    </form>
+                </li>
                 <!-- <li class="nav-item"><a class="nav-link" href="#whyVriddhi"><button class="btn btn-dark">Log Out</button>
                     </a></li> -->
             </ul>
