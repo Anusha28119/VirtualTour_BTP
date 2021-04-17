@@ -16,6 +16,7 @@ const catchAsync = require('./utils/catchAsync');
 const uniAdmin = require('./models/uniadmin');
 const bcrypt = require('bcrypt');
 const MongoStore = require('connect-mongo');
+const port = process.env.PORT||3000;
 
 
 const MongoClient = require('mongodb').MongoClient;
@@ -58,8 +59,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
 app.engine('ejs', ejsMate);
 
-app.listen(3000, () => {
-    console.log("App is listening on port 3000!")
+app.listen(port, () => {
+    console.log('App is listening on port '+ port)
 })
 
 //mongodb://localhost/IGDTUW_tour
