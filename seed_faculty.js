@@ -11,13 +11,13 @@ mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).t
 
 const faculties = [
     {
-        name: "Meisha",
-        email: "meisha@gmail.com",
+        name: "Radha",
+        email: "radha@gmail.com",
         password: "facultypass",
     },
     {
-        name: "Anusha",
-        email: "anusha@gmail.com",
+        name: "Varsha",
+        email: "varsha@gmail.com",
         password: "password",
     }
 ]

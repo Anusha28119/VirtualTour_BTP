@@ -15,17 +15,61 @@ const ejsMate = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
 const uniAdmin = require('./models/uniadmin');
 const bcrypt = require('bcrypt');
+const MongoStore = require('connect-mongo');
 
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://db_admin_user:w7G8zsHjAcFQaQt@cluster0.v3icg.mongodb.net/IGDTUW_tour?retryWrites=true&w=majority" || 'mongodb://localhost/IGDTUW_tour';
+// const uri = 'mongodb://localhost/IGDTUW_tour';
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect().then(() => {
+//     console.log('Database connection open!')
+// }).catch(err => {
+//     const collection = client.db("test").collection("devices");
+//     // perform actions on the collection object
+//     console.log('Database connection error!')
+//     console.log(err)
+//     client.close();
+// });
+
+const store = MongoStore.create({
+    mongoUrl: uri,
+    secret: 'Not a good secret',
+    touchAfter: 24*60*60
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR",e)
+    
+})
+
+const sessionConfig = {
+    store,
+    name: 'session',
+    secret: 'Not a good secret',
+    resave: false,
+    saveUninitialized: true
+}
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ secret: 'Not a good secret' }));
+// app.use(session({ secret: 'Not a good secret' }));
+app.use(session(sessionConfig));
 app.engine('ejs', ejsMate);
 
 app.listen(3000, () => {
     console.log("App is listening on port 3000!")
 })
+
+//mongodb://localhost/IGDTUW_tour
+
+mongoose.connect(uri, { useNewUrlParser: true }).then(() => {
+    console.log("Mongo connection open!")
+}).catch(err => {
+    console.log("Mongo connection error")
+    console.log(err)
+});
 
 const requireLogin =(req,res, next) =>{
     if(!req.session.user_id)
@@ -170,15 +214,6 @@ app.post('/login', catchAsync(async(req,res) => {
     }
 
 }))
-
-
-
-mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).then(() => {
-    console.log("Mongo connection open!")
-}).catch(err => {
-    console.log("Mongo connection error")
-    console.log(err)
-});
 
 app.get('/universityadmin', (req, res) => {
     res.render('users/profile_uniadmin')
