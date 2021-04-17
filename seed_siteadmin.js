@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const siteadmin = require('./models/siteadmin');
+const uri = "mongodb+srv://db_admin_user:w7G8zsHjAcFQaQt@cluster0.v3icg.mongodb.net/IGDTUW_tour?retryWrites=true&w=majority" || 'mongodb://localhost/IGDTUW_tour';
 
-mongoose.connect('mongodb://localhost/IGDTUW_tour', { useNewUrlParser: true }).then(() => {
+mongoose.connect(uri, { useNewUrlParser: true }).then(() => {
     console.log("Mongo connection open!")
 }).catch(err => {
     console.log("Mongo connection error")
