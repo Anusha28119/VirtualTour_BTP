@@ -20,8 +20,8 @@ const port = process.env.PORT||3000;
 
 
 const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://db_admin_user:w7G8zsHjAcFQaQt@cluster0.v3icg.mongodb.net/IGDTUW_tour?retryWrites=true&w=majority" || 'mongodb://localhost/IGDTUW_tour';
-const uri = 'mongodb://localhost/IGDTUW_tour';
+const uri = "mongodb+srv://db_admin_user:w7G8zsHjAcFQaQt@cluster0.v3icg.mongodb.net/IGDTUW_tour?retryWrites=true&w=majority" || 'mongodb://localhost/IGDTUW_tour';
+// const uri = 'mongodb://localhost/IGDTUW_tour';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 // client.connect().then(() => {
 //     console.log('Database connection open!')
