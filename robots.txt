@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /database/
+Sitemap: http://www.igdtuwvirtualnavigator.in/sitemap.xml
