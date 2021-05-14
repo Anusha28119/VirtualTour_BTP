@@ -220,32 +220,32 @@ app.get('/universityadmin', (req, res) => {
     res.render('users/profile_uniadmin')
 })
 
-app.post('/universityadmin/searchQueries', requireLogin, catchAsync(async (req,res)=>{
+// app.post('/universityadmin/searchQueries', requireLogin, catchAsync(async (req,res)=>{
     
-    const dbo = queries.find({})
-    const users = await dbo
-    console.log(users)
-    res.render('users/queries_uniadmin', { users })
+//     const dbo = queries.find({})
+//     const users = await dbo
+//     console.log(users)
+//     res.render('users/queries_uniadmin', { users })
 
-}))
+// }))
 
-app.post('/student/searchQueries', requireLogin, catchAsync(async (req,res)=>{
+// app.post('/student/searchQueries', requireLogin, catchAsync(async (req,res)=>{
     
-    const dbo = queries.find({})
-    const users = await dbo
-    console.log(users)
-    res.render('users/queries_student', { users })
+//     const dbo = queries.find({})
+//     const users = await dbo
+//     console.log(users)
+//     res.render('users/queries_student', { users })
 
-}))
+// }))
 
-app.post('/faculty/searchQueries', requireLogin, catchAsync(async (req,res)=>{
+// app.post('/faculty/searchQueries', requireLogin, catchAsync(async (req,res)=>{
     
-    const dbo = queries.find({})
-    const users = await dbo
-    console.log(users)
-    res.render('users/queries_faculty', { users })
+//     const dbo = queries.find({})
+//     const users = await dbo
+//     console.log(users)
+//     res.render('users/queries_faculty', { users })
 
-}))
+// }))
 
 app.get('/uniadmin/queries', requireLogin, catchAsync(async (req, res) => {
     const { category } = req.query
