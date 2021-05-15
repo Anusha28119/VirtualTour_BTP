@@ -87,6 +87,11 @@ app.get('/login', (req,res) => {
     res.render('users/login')
 })
 
+app.get('/', (req,res) => {
+    res.status(301)
+    res.redirect('/home')
+})
+
 app.post('/login', catchAsync(async(req,res) => {
     const{email, password, User} = req.body;
     console.log('Ye request ki body hai')
