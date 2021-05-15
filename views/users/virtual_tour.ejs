@@ -1,0 +1,54 @@
+<% layout ('/layouts/boilerplate')%>
+    <style>
+        .viewer__iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        iframe {
+            border: none;
+        }
+
+        .viewer {
+            overflow: hidden;
+            height: 45rem;
+        }
+
+        @media (max-width: 1600px) {
+            .viewer {
+                height: 35rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .viewer {
+                height: 40rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .viewer {
+                height: 33rem;
+                width: 100%;
+            }
+        }
+    </style>
+
+<div class="row mt-5" id="tour">
+    <h2 class="text-center" style="color: rgb(10, 10, 10); font-family: Montserrat; font-weight: 800;">Virtual Tour</h2>
+    <p>Get a flavour of the IGDTUW campus by clicking on 'Enter Virtual Tour' below, and start your navigational
+        experience.</p><br />
+    <p>The IGDTUW Virtual Navigation Portal is purely an academic endeavour made to study search engine optimization
+        techniques through a hands-on, iterative approach.</p><br />
+    <p>The virtual tour is purely intended to study user behaviour and its SEO impacts.</p><br />
+</div>
+<div class="viewer">
+
+    <iframe id="vrframe" loading="lazy" class="viewer__iframe" allowfullscreen="true" width="1913px" height="860px"
+        frameborder="0" src="https://propvr.tech/embed.html?cid=RpEDnyvmZegxnLOq5UHHT0oyJF52&proid=IGDTUW Virtual Tour">
+
+    </iframe>
+
+</div>
