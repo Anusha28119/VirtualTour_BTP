@@ -12,9 +12,9 @@
                     </div>
 
                     <div class="mb-2">
-                        <label for="email">Email address (abc@example.com)</label>
-                        <input class="form-control" type="email" name="email" id="email" required disabled value="<%= users.email %>"><br />
-                    </div>
+                        <label for="email">Enter email address</label>
+                        <input class="form-control" type="email" name="email" id="email" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required><br />
+                        </div>
 
                     <div class="mb-2">
                         <label for="password">Password</label>
