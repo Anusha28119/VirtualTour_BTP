@@ -92,6 +92,10 @@ app.get('/', (req,res) => {
     res.redirect('/home')
 })
 
+app.get('/tour', (req,res) => {
+    res.render('users/virtual_tour')
+})
+
 app.post('/login', catchAsync(async(req,res) => {
     const{email, password, User} = req.body;
     console.log('Ye request ki body hai')
