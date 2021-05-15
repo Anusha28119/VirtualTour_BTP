@@ -1,5 +1,7 @@
 Options +FollowSymLinks
 RewriteEngine on
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI}
 RewriteCond %{HTTP_HOST} .
 RewriteCond %{HTTP_HOST} !^nameless-sands-99929.herokuapp.com
 RewriteRule (.*) http://nameless-sands-99929.herokuapp.com/$1 [R=301,L]
