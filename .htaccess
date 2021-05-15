@@ -1,0 +1,5 @@
+Options +FollowSymLinks
+RewriteEngine on
+RewriteCond %{HTTP_HOST} .
+RewriteCond %{HTTP_HOST} !^nameless-sands-99929.herokuapp.com/home
+RewriteRule (.*) http://nameless-sands-99929.herokuapp.com/home/$1 [R=301,L]
