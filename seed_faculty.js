@@ -13,13 +13,13 @@ mongoose.connect(uri, { useNewUrlParser: true }).then(() => {
 const faculties = [
     {
         name: "Radha",
-        email: "radha@gmail.com",
-        password: "facultypass",
+        email: "radha@igdtuw.ac.in",
+        password: "Radha123!",
     },
     {
         name: "Varsha",
-        email: "varsha@gmail.com",
-        password: "password",
+        email: "varsha@igdtuw.ac.in",
+        password: "Varsha123!",
     }
 ]
 

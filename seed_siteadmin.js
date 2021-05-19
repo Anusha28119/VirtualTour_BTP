@@ -12,14 +12,14 @@ mongoose.connect(uri, { useNewUrlParser: true }).then(() => {
 
 const siteadmins = [
     {
-        name: "Alice Jones",
-        email: "alice_jones@gmail.com",
-        password: "password",
+        name: "Anusha",
+        email: "anusha042btit17@igdtuw.ac.in",
+        password: "Anusha123!",
     },
     {
-        name: "Jake Cooper",
-        email: "jcooper@gmail.com",
-        password: "password",
+        name: "Gurmeisha",
+        email: "gurmeisha033btit17@igdtuw.ac.in",
+        password: "Gurmeisha123!",
     }
 ]
 
