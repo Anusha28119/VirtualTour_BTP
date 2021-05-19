@@ -1,38 +1,42 @@
 <% layout ('/layouts/boilerplate_nonloggedin')%>
-<div class="row mt-3" style="margin:auto; padding:auto;">
-    <h1 style="font-weight: 800; color:rgb(7, 7, 7); text-align: center;">LOGIN</h1>
-    <div class="card card-dark col-5 offset-4 mt-4" style="background-image: linear-gradient(to right, #434343 0%, black 100%); font-weight: 600; fill-opacity: 0.5; align-self: center;">
-    <form class="row g-3" action="/login" method="POST" style="color:aliceblue">
-        <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
+    <div class="row mt-3" style="margin:auto; padding:auto;">
+        <h1 style="font-weight: 800; color:rgb(7, 7, 7); text-align: center;">LOGIN</h1>
+        <div class="card card-dark col-5 offset-4 mt-4"
+            style="background-image: linear-gradient(to right, #434343 0%, black 100%); font-weight: 600; fill-opacity: 0.5; align-self: center;">
+            <form class="row g-3" action="/login" method="POST" style="color:aliceblue">
+                <div class="form-group col-9 offset-1" style="fill-opacity: 1.0;">
 
-        <div class="mb-2 mt-3">
-        <label for="email">Enter email id </label>
-        <input class="form-control" type="text" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br/>
-        </div>
+                    <div class="mb-2 mt-3">
+                        <label for="email">Enter email id </label>
+                        <input class="form-control" type="text" name="email" id="email"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br />
+                    </div>
 
-        <div class="mb-2">
-        <label for="password">Enter password</label>
-        <input class="form-control" type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" id="password" required>
-        <input type="checkbox" onclick="myFunction()">Show Password<br />
-        </div>
+                    <div class="mb-2">
+                        <label for="password">Enter password</label>
+                        <input class="form-control" type="password" name="password"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"
+                            id="password" required>
+                        <input type="checkbox" onclick="myFunction()">Show Password<br />
+                    </div>
 
-        <div class="mb-2">
-        <label for="User">Enter User type</label>
-         <select class="form-control" name="User" id="User" required>
-            <option value="student" selected>Student</option>
-            <option value="faculty">Faculty</option>
-            <option value="uniadmin">University administration</option>
-            <option value="siteadmin">Web team</option>
-        </select><br />
-        </div>
+                    <div class="mb-2">
+                        <label for="User">Enter User type</label>
+                        <select class="form-control" name="User" id="User" required>
+                            <option value="student" selected>Student</option>
+                            <option value="faculty">Faculty</option>
+                            <option value="uniadmin">University administration</option>
+                            <option value="siteadmin">Web team</option>
+                        </select><br />
+                    </div>
 
-        <div class="mb-3 mt-2 col-md">
-        <input class="form-control btn btn-success" type="submit" name="submit" value="Submit" />
+                    <div class="mb-3 mt-2 col-md">
+                        <input class="form-control btn btn-success" type="submit" name="submit" value="Submit" />
+                    </div>
+                </div>
+            </form>
         </div>
-        </div>
-    </form>
-</div>
-<!-- <div class="card col-5 offset-2 mt-4" style="background-color:white">
+        <!-- <div class="card col-5 offset-2 mt-4" style="background-color:white">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -55,4 +59,4 @@
         </a>
     </div>
 </div> -->
-</div>
+    </div>

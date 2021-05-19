@@ -10,8 +10,8 @@ const queriesSchema = new mongoose.Schema(
             type: String,
             required: false
         },
-        session_id:{
-            type:String,
+        session_id: {
+            type: String,
             required: false
         }
 

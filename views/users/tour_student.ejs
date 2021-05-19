@@ -1,45 +1,46 @@
 <% layout ('/layouts/boilerplate_student')%>
-<style>
-                        .viewer__iframe {
-                            width: 100%;
-                            height: 100%;
-                        }
-                    
-                        iframe {
-                            border: none;
-                        }
-                    
-                        .viewer {
-                            overflow: hidden;
-                            height: 45rem;
-                        }
-                    
-                        @media (max-width: 1600px) {
-                            .viewer {
-                                height: 35rem;
-                                width: 100%;
-                            }
-                        }
-                    
-                        @media (max-width: 767px) {
-                            .viewer {
-                                height: 40rem;
-                                width: 100%;
-                            }
-                        }
-                    
-                        @media (max-width: 750px) {
-                            .viewer {
-                                height: 33rem;
-                                width: 100%;
-                            }
-                        }
-                    </style>
-<div class="viewer">
+    <style>
+        .viewer__iframe {
+            width: 100%;
+            height: 100%;
+        }
 
-    <iframe id="vrframe" loading="lazy" class="viewer__iframe" allowfullscreen="true" width="1913px" height="860px"
-        frameborder="0" src="https://propvr.tech/embed.html?cid=RpEDnyvmZegxnLOq5UHHT0oyJF52&proid=IGDTUW Virtual Tour">
+        iframe {
+            border: none;
+        }
 
-    </iframe>
+        .viewer {
+            overflow: hidden;
+            height: 45rem;
+        }
 
-</div>
+        @media (max-width: 1600px) {
+            .viewer {
+                height: 35rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .viewer {
+                height: 40rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .viewer {
+                height: 33rem;
+                width: 100%;
+            }
+        }
+    </style>
+    <div class="viewer">
+
+        <iframe id="vrframe" loading="lazy" class="viewer__iframe" allowfullscreen="true" width="1913px" height="860px"
+            frameborder="0"
+            src="https://propvr.tech/embed.html?cid=RpEDnyvmZegxnLOq5UHHT0oyJF52&proid=IGDTUW Virtual Tour">
+
+        </iframe>
+
+    </div>

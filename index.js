@@ -16,7 +16,7 @@ const catchAsync = require('./utils/catchAsync');
 const uniAdmin = require('./models/uniadmin');
 const bcrypt = require('bcrypt');
 const MongoStore = require('connect-mongo');
-const port = process.env.PORT||3000;
+const port = process.env.PORT || 3000;
 
 
 const MongoClient = require('mongodb').MongoClient;
@@ -36,12 +36,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const store = MongoStore.create({
     mongoUrl: uri,
     secret: 'Not a good secret',
-    touchAfter: 24*60*60
+    touchAfter: 24 * 60 * 60
 });
 
 store.on("error", function (e) {
-    console.log("SESSION STORE ERROR",e)
-    
+    console.log("SESSION STORE ERROR", e)
+
 })
 
 const sessionConfig = {
@@ -60,7 +60,7 @@ app.use(session(sessionConfig));
 app.engine('ejs', ejsMate);
 
 app.listen(port, () => {
-    console.log('App is listening on port '+ port)
+    console.log('App is listening on port ' + port)
 })
 
 //mongodb://localhost/IGDTUW_tour
@@ -72,99 +72,96 @@ mongoose.connect(uri, { useNewUrlParser: true }).then(() => {
     console.log(err)
 });
 
-const requireLogin =(req,res, next) =>{
-    if(!req.session.user_id)
-    {
+const requireLogin = (req, res, next) => {
+    if (!req.session.user_id) {
         return res.redirect('/login')
     }
-    
+
     next();
 
 }
 
 
-app.get('/login', (req,res) => {
+app.get('/login', (req, res) => {
     res.render('users/login')
 })
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.status(301)
     res.redirect('/home')
 })
 
-app.get('/tour', (req,res) => {
+app.get('/tour', (req, res) => {
     res.render('users/virtual_tour')
 })
 
-app.post('/login', catchAsync(async(req,res) => {
-    const{email, password, User} = req.body;
+app.post('/login', catchAsync(async (req, res) => {
+    const { email, password, User } = req.body;
     console.log('Ye request ki body hai')
     console.log(req.body)
     console.log(User);
-    if(User == 'student'){
+    if (User == 'student') {
         console.log('Inside student conditional')
-        const user = await student.findOne({email});
+        const user = await student.findOne({ email });
         console.log('Ye user mila')
         console.log(user)
-        if(user==null)
-        {
-           res.send("Try again")
-        }else{
-        
-        if(password==user.password){
-           user.session_id=user._id;
-           req.session.user_id=user._id;
-           await user.save()
-
-           console.log(req.session.user_id)
-           //res.send(user);
-           console.log(user);
-           global.User_profile=user;
-           
-           const users = await student.findOne({email});
-           //user.session_id=user._id;
-           //await user.save()
-           console.log(users);
-           res.render('users/profile_student', {users:users});
-         }
-        else{
-          res.status(401)
-          res.render('users/incorrect_credentials')
-         }
-       }
-    }
-    else if(User == 'uniadmin'){
-         const user = await uniadmin.findOne({email});
-        console.log('Ye user mila')
-        console.log(user)
-         if(user==null)
-         {
+        if (user == null) {
             res.send("Try again")
-         }else{
-             console.log(user);
-         
-         if(password==user.password){
-            user.session_id=user._id;
-            req.session.user_id=user._id;
-            await user.save()
+        } else {
 
-            console.log(req.session.user_id)
-            //res.send(user);
-            console.log(user);
-            global.User_profile=user;
-            //console.log(users);
-            const users = await uniadmin.findOne({email});
-            //user.session_id=user._id;
-            //await user.save()
-            req.session.user_id=user._id;
-            res.render('users/profile_uniadmin', {users:users});
-          }
-         else{
-           res.status(401).send('Incorrect username or password. Please try again!');  
-           res.redirect('/login')
-          }
+            if (password == user.password) {
+                user.session_id = user._id;
+                req.session.user_id = user._id;
+                await user.save()
+
+                console.log(req.session.user_id)
+                //res.send(user);
+                console.log(user);
+                global.User_profile = user;
+
+                const users = await student.findOne({ email });
+                //user.session_id=user._id;
+                //await user.save()
+                console.log(users);
+                res.render('users/profile_student', { users: users });
+            }
+            else {
+                res.status(401)
+                res.render('users/incorrect_credentials')
+            }
         }
-    }else if( User == 'siteadmin'){
+    }
+    else if (User == 'uniadmin') {
+        const user = await uniadmin.findOne({ email });
+        console.log('Ye user mila')
+        console.log(user)
+        if (user == null) {
+            res.send("Try again")
+        } else {
+            console.log(user);
+
+            if (password == user.password) {
+                user.session_id = user._id;
+                req.session.user_id = user._id;
+                await user.save()
+
+                console.log(req.session.user_id)
+                //res.send(user);
+                console.log(user);
+                global.User_profile = user;
+                //console.log(users);
+                const users = await uniadmin.findOne({ email });
+                //user.session_id=user._id;
+                //await user.save()
+                req.session.user_id = user._id;
+                res.render('users/profile_uniadmin', { users: users });
+            }
+            else {
+                res.status(401).send('Incorrect username or password. Please try again!');
+                res.redirect('/login')
+            }
+        }
+    } else if (User == 'siteadmin') {
         const user = await siteadmin.findOne({ email });
         if (user == null) {
             res.send("Try again")
@@ -192,35 +189,34 @@ app.post('/login', catchAsync(async(req,res) => {
                 res.redirect('/login')
             }
         }
-    }else if(User == 'faculty'){
-        const user = await faculty.findOne({email});
-        if(user==null)
-        {
-           res.send("Try again")
-        }else{
+    } else if (User == 'faculty') {
+        const user = await faculty.findOne({ email });
+        if (user == null) {
+            res.send("Try again")
+        } else {
             console.log(user)
-        
-        if(password==user.password){
-           user.session_id=user._id;
-           req.session.user_id=user._id;
-           await user.save()
 
-           console.log(req.session.user_id)
-           //res.send(user);
-           console.log(user);
-           global.User_profile=user;
-           //console.log(users);
-           const users = await faculty.findOne({email});
-           //user.session_id=user._id;
-           //await user.save()
-           req.session.user_id = user._id;
-           res.render('users/profile_faculty', {users:users});
-         }
-        else{
-          res.status(401).send('Incorrect username or password. Please try again!');  
-          res.redirect('/login')
-         }
-       }
+            if (password == user.password) {
+                user.session_id = user._id;
+                req.session.user_id = user._id;
+                await user.save()
+
+                console.log(req.session.user_id)
+                //res.send(user);
+                console.log(user);
+                global.User_profile = user;
+                //console.log(users);
+                const users = await faculty.findOne({ email });
+                //user.session_id=user._id;
+                //await user.save()
+                req.session.user_id = user._id;
+                res.render('users/profile_faculty', { users: users });
+            }
+            else {
+                res.status(401).send('Incorrect username or password. Please try again!');
+                res.redirect('/login')
+            }
+        }
     }
 
 }))
@@ -230,7 +226,7 @@ app.get('/universityadmin', (req, res) => {
 })
 
 // app.post('/universityadmin/searchQueries', requireLogin, catchAsync(async (req,res)=>{
-    
+
 //     const dbo = queries.find({})
 //     const users = await dbo
 //     console.log(users)
@@ -239,7 +235,7 @@ app.get('/universityadmin', (req, res) => {
 // }))
 
 // app.post('/student/searchQueries', requireLogin, catchAsync(async (req,res)=>{
-    
+
 //     const dbo = queries.find({})
 //     const users = await dbo
 //     console.log(users)
@@ -248,7 +244,7 @@ app.get('/universityadmin', (req, res) => {
 // }))
 
 // app.post('/faculty/searchQueries', requireLogin, catchAsync(async (req,res)=>{
-    
+
 //     const dbo = queries.find({})
 //     const users = await dbo
 //     console.log(users)
@@ -259,8 +255,8 @@ app.get('/universityadmin', (req, res) => {
 app.get('/uniadmin/queries', requireLogin, catchAsync(async (req, res) => {
     const { category } = req.query
     console.log(category)
-        const users = await queries.findOne({ heading:category });
-        res.render('users/query_details_uniadmin', { user:users})
+    const users = await queries.findOne({ heading: category });
+    res.render('users/query_details_uniadmin', { user: users })
 
     // else {
     //     const users = await entrepreneur.find({})
@@ -272,34 +268,34 @@ app.get('/uniadmin/queries', requireLogin, catchAsync(async (req, res) => {
 app.get('/faculty/queries', requireLogin, catchAsync(async (req, res) => {
     const { category } = req.query
     console.log(category)
-        const users = await queries.findOne({ heading:category });
-        res.render('users/query_details_faculty', { user:users})
+    const users = await queries.findOne({ heading: category });
+    res.render('users/query_details_faculty', { user: users })
 
 }))
 
 app.get('/student/queries', requireLogin, catchAsync(async (req, res) => {
     const { category } = req.query
     console.log(category)
-        const users = await queries.findOne({ heading:category });
-        res.render('users/query_details_student', { user:users})
+    const users = await queries.findOne({ heading: category });
+    res.render('users/query_details_student', { user: users })
 
 }))
 
 
-app.post('/universityadmin/filterQueries', requireLogin, catchAsync(async (req,res)=>{
-    var x=req.session.user_id;
-    const user = await uniadmin.findOne({session_id:x});
+app.post('/universityadmin/filterQueries', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await uniadmin.findOne({ session_id: x });
     console.log(req.body.password);
-    user.password=req.body.password;
+    user.password = req.body.password;
     console.log(user);
     await user.save()
     res.render('users/edit_success')
 
 }))
 
-app.post('/universityadmin/submitInput/success', requireLogin, catchAsync(async (req,res)=>{
-    var x=req.session.user_id;
-    const user = await uniadmin.findOne({session_id:x});
+app.post('/universityadmin/submitInput/success', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await uniadmin.findOne({ session_id: x });
     console.log(req.body.password);
     //enter into a model
     const newMessage = new message({
@@ -320,9 +316,9 @@ app.post('/universityadmin/submitInput/success', requireLogin, catchAsync(async 
 }))
 
 
-app.post('/student/submitInput/success', requireLogin, catchAsync(async (req,res)=>{
-    var x=req.session.user_id;
-    const user = await student.findOne({session_id:x});
+app.post('/student/submitInput/success', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await student.findOne({ session_id: x });
     console.log(req.body.password);
     //enter into a model
     const newMessage = new message({
@@ -341,9 +337,9 @@ app.post('/student/submitInput/success', requireLogin, catchAsync(async (req,res
 
 }))
 
-app.post('/faculty/submitInput/success', requireLogin, catchAsync(async (req,res)=>{
-    var x=req.session.user_id;
-    const user = await faculty.findOne({session_id:x});
+app.post('/faculty/submitInput/success', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await faculty.findOne({ session_id: x });
     console.log(req.body.password);
     //enter into a model
     const newMessage = new message({
@@ -362,33 +358,33 @@ app.post('/faculty/submitInput/success', requireLogin, catchAsync(async (req,res
 
 }))
 
-app.post('/universityadmin/edit/success', requireLogin, catchAsync(async (req,res)=>{
-    var x=req.session.user_id;
-    const user = await uniadmin.findOne({session_id:x});
+app.post('/universityadmin/edit/success', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await uniadmin.findOne({ session_id: x });
     console.log(req.body.password);
-    user.password=req.body.password;
+    user.password = req.body.password;
     console.log(user);
     await user.save()
     res.render('users/edit_success')
 
 }))
 
-app.post('/student/edit/success', requireLogin, catchAsync(async (req,res)=>{
-    var x=req.session.user_id;
-    const user = await student.findOne({session_id:x});
+app.post('/student/edit/success', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await student.findOne({ session_id: x });
     console.log(req.body.password);
-    user.password=req.body.password;
+    user.password = req.body.password;
     console.log(user);
     await user.save()
     res.render('users/edit_success_student')
 
 }))
 
-app.post('/faculty/edit/success', requireLogin, catchAsync(async (req,res)=>{
-    var x=req.session.user_id;
-    const user = await faculty.findOne({session_id:x});
+app.post('/faculty/edit/success', requireLogin, catchAsync(async (req, res) => {
+    var x = req.session.user_id;
+    const user = await faculty.findOne({ session_id: x });
     console.log(req.body.password);
-    user.password=req.body.password;
+    user.password = req.body.password;
     console.log(user);
     await user.save()
     res.render('users/edit_success_faculty')
@@ -396,31 +392,31 @@ app.post('/faculty/edit/success', requireLogin, catchAsync(async (req,res)=>{
 }))
 
 app.post('/universityadmin/edit', requireLogin, catchAsync(async (req, res) => {
-    
-    var x=req.session.user_id;
-    const user = await uniadmin.findOne({session_id:x});
+
+    var x = req.session.user_id;
+    const user = await uniadmin.findOne({ session_id: x });
     console.log(user)
     res.render('users/edit_profile', { users: user })
 }))
 
 app.post('/student/edit', requireLogin, catchAsync(async (req, res) => {
-    var x=req.session.user_id;
-    const user = await student.findOne({session_id:x});
+    var x = req.session.user_id;
+    const user = await student.findOne({ session_id: x });
     console.log(user)
     res.render('users/edit_profile_student', { users: user })
 }))
 
 app.post('/faculty/edit', requireLogin, catchAsync(async (req, res) => {
-    var x=req.session.user_id;
-    const user = await faculty.findOne({session_id:x});
+    var x = req.session.user_id;
+    const user = await faculty.findOne({ session_id: x });
     console.log(user)
     res.render('users/edit_profile_faculty', { users: user })
 }))
 
 app.post('/faculty/submitInput', requireLogin, catchAsync(async (req, res) => {
-    
-    var x=req.session.user_id;
-    const user = await faculty.findOne({session_id:x});
+
+    var x = req.session.user_id;
+    const user = await faculty.findOne({ session_id: x });
     console.log(user)
     res.render('users/submit_input_faculty', { users: user })
 
@@ -429,9 +425,9 @@ app.post('/faculty/submitInput', requireLogin, catchAsync(async (req, res) => {
 
 
 app.post('/student/submitInput', requireLogin, catchAsync(async (req, res) => {
-    
-    var x=req.session.user_id;
-    const user = await student.findOne({session_id:x});
+
+    var x = req.session.user_id;
+    const user = await student.findOne({ session_id: x });
     console.log(user)
     res.render('users/submit_input_student', { users: user })
 }))
@@ -443,7 +439,7 @@ app.get('/siteadmin/view/input', requireLogin, catchAsync(async (req, res) => {
     res.render('users/view_input', { users })
 }))
 
-app.post('/home_student', async (req,res) =>{
+app.post('/home_student', async (req, res) => {
     res.render('users/tour_student')
 })
 
@@ -471,10 +467,10 @@ app.post('/universityadmin/submitInput/approve', requireLogin, catchAsync(async 
     var x = req.session.user_id;
     console.log(req.body)
     const user = await siteadmin.findOne({ session_id: x });
-    const user_msg =  await message.findOne({email:req.body.email, submission: req.body.submission})
+    const user_msg = await message.findOne({ email: req.body.email, submission: req.body.submission })
     console.log('This is the user message ka approval status')
     console.log(user_msg.approved)
-    user_msg.approved=!user_msg.approved
+    user_msg.approved = !user_msg.approved
     console.log('This is the user message ka naya approval status')
     console.log(user_msg.approved)
     await user_msg.save()
@@ -499,7 +495,7 @@ app.post('/universityadmin/submitInput/add', requireLogin, catchAsync(async (req
     console.log(req.body)
     const user = await siteadmin.findOne({ session_id: x });
     const user_msg = await message.findOne({ email: req.body.email, submission: req.body.submission })
-    user_msg.added=1
+    user_msg.added = 1
     await user_msg.save()
     const newQuery = new queries({
         heading: req.body.category,
@@ -512,9 +508,9 @@ app.post('/universityadmin/submitInput/add', requireLogin, catchAsync(async (req
 }))
 
 app.post('/universityadmin/submitInput', requireLogin, catchAsync(async (req, res) => {
-    
-    var x=req.session.user_id;
-    const user = await uniadmin.findOne({session_id:x});
+
+    var x = req.session.user_id;
+    const user = await uniadmin.findOne({ session_id: x });
     console.log(user)
     res.render('users/submit_input', { users: user })
 

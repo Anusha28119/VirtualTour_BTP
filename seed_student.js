@@ -21,7 +21,7 @@ const students = [
         email: "gurmeisha033btit17@igdtuw.ac.in",
         password: "Gurmeisha123!",
     }
-    
+
 ]
 
 student.insertMany(students).then(res => {
