@@ -12,7 +12,7 @@
 
         <div class="mb-2">
         <label for="password">Enter password</label>
-        <input class="form-control" type="password" name="password" pattern="[A-Za-z]{8}" id="password" required>
+        <input class="form-control" type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" id="password" required>
         <input type="checkbox" onclick="myFunction()">Show Password<br />
         </div>
 
